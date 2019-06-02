@@ -21,7 +21,7 @@ def index():
            abort(400)
         data = request.data
         dataDict = json.loads(data)
-        shift = int(os.environ["HOSTNAME"][9:])
+        shift = int(os.uname()[1][9:])
         value = (int(dataDict["value"]) >> shift) & 1
         ledcontrol.control(led,"on" if value else "off")
         return "Set LED to: "+ str(value) + "\n"
