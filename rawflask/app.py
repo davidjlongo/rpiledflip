@@ -1,5 +1,5 @@
 #!flask/bin/python
-from flask import Flask, abort, request
+from flask import Flask, abort, request, jsonify
 import json
 import ledcontrol
 import os
@@ -24,7 +24,8 @@ def index():
         shift = int(os.uname()[1][9:])
         value = (int(dataDict["value"]) >> shift) & 1
         ledcontrol.control(led,"on" if value else "off")
-        return "Set LED to: "+ str(value) + "\n"
+        #return ""#"Set LED to: "+ str(value) + "\n"
+        return jsonify({"success": True})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5011, debug=False)
